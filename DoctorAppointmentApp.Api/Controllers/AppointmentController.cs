@@ -28,6 +28,7 @@ namespace DoctorAppointmentApp.Api.Controllers
                           select new
                           {
                               patientName = Patient.patientName,
+                              mobileNo = Patient.mobileNo,
                               email = Patient.email,
                               city = Patient.city,
                               appointmentId = app.appointmentId,
@@ -48,6 +49,7 @@ namespace DoctorAppointmentApp.Api.Controllers
                           select new
                           {
                               patientName = Patient.patientName,
+                              mobileNo = Patient.mobileNo,
                               email = Patient.email,
                               city = Patient.city,
                               appointmentId = app.appointmentId,
@@ -68,6 +70,7 @@ namespace DoctorAppointmentApp.Api.Controllers
                           select new
                           {
                               patientName = Patient.patientName,
+                              mobileNo = Patient.mobileNo,
                               email = Patient.email,
                               city = Patient.city,
                               appointmentId = app.appointmentId,
@@ -83,10 +86,35 @@ namespace DoctorAppointmentApp.Api.Controllers
         public IActionResult ChangeStatus(int appointmentid)
         {
             var data = _db.Appointments.SingleOrDefault(x => x.appointmentId == appointmentid);
+
+
             data.isDone = true;
 
             _db.SaveChanges();
             return Ok(data);
+        }
+
+        [Route("getPatientByPhoneNo")]
+        [HttpGet]
+        public IActionResult getPatientByPhoneNo(string mobile)
+        {
+            var data = _db.Patients.SingleOrDefault(x => x.mobileNo == mobile);
+            if(data != null)
+            {
+                return Ok(data);
+            }
+            else
+            {
+                return NotFound("Patient Not Found");
+            }
+        }
+
+        [Route("getAllPatient")]
+        [HttpGet]
+        public IActionResult getAllPatient()
+        {
+            var result = _db.Patients.ToList();
+            return Ok(result);
         }
 
         [Route("createNewAppointement")]
@@ -130,7 +158,7 @@ namespace DoctorAppointmentApp.Api.Controllers
                 _db.SaveChanges();
             }
 
-            return Ok("Appointment Created");
+            return Created("Appointment Created", obj);
 
         }
 

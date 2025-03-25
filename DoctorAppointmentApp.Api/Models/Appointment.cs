@@ -15,6 +15,6 @@ namespace DoctorAppointmentApp.Api.Models
         [Required]
         public bool isDone { get; set; }
         [Required]
-        public Nullable<float> fees { get; set; }
+        public Nullable<double> fees { get; set; }
     }
 }

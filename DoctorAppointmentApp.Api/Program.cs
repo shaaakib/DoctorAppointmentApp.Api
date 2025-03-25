@@ -12,9 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppointmentDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("AppointmentCon"));
-});         
+options.UseSqlServer(builder.Configuration.GetConnectionString("AppointmentCon")));
 
 builder.Services.AddCors();
 builder.Services.AddCors(options =>
